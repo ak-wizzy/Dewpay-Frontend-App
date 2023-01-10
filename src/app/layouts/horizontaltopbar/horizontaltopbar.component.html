@@ -1,0 +1,179 @@
+<header id="page-topbar">
+  <div class="navbar-header">
+    <div class="d-flex">
+      <!-- LOGO -->
+      <div class="navbar-brand-box">
+        <a routerLink="/" class="logo logo-dark">
+          <span class="logo-sm">
+            <!-- <h3 style="color: white;">Dew Pay</h3> -->
+            <img src="assets/images/dewpay-icon-small.png" alt="" height="50">
+          </span>
+          <span class="logo-lg">
+            <!-- <h3 style="color: white;">Dew Pay</h3> -->
+            <img src="assets/images/dewpay-icon.png" alt="" height="50">
+          </span>
+        </a>
+
+        <a routerLink="/" class="logo logo-light">
+          <span class="logo-sm">
+            <!-- <h3 style="color: white;">Dew Pay</h3> -->
+            <img src="assets/images/dewpay-icon-small.png" alt="" height="50">
+          </span>
+          <span class="logo-lg">
+            <!-- <h3 style="color: white;">Dew Pay</h3> -->
+            <img src="assets/images/dewpay-icon.png" alt="" height="50">
+          </span>
+        </a>
+      </div>
+    </div>
+    <div class="d-flex">
+
+      <div class="dropdown d-inline-block d-lg-none me-2" ngbDropdown>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" ngbDropdownMenu>
+
+          <form class="p-3">
+            <div class="m-0">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <ng-container *ngIf="walletDetail">
+
+        <!-- <div *ngIf="show; else noShow" style="margin-top: 20px;">
+          <p style="font-size: 14px; color: white; font-weight: 700; margin: 0px;">Balance:
+            {{balance | currency : '': 'NGN'}}
+            <i (click)="showOrHide()" class="mdi mdi-eye-outline d-none d-xl-inline-block"></i>
+          </p>
+          <p style="font-size: 14px; color: white; font-weight: 600;  margin: 0px;">Account:
+            {{walletDetail?.accountNumber}} ({{walletDetail?.bankName}})</p>
+
+        </div> -->
+        <!-- <ng-template #noShow>
+          <div style="margin-top: 20px;">
+            <p style="font-size: 14px; color: white; font-weight: 700;  margin: 0px;">Balance: ***********
+              <i (click)="showOrHide()" class="mdi mdi-eye-off-outline d-none d-xl-inline-block"></i>
+            </p>
+            <p style="font-size: 14px; color: white; font-weight: 600;  margin: 0px;">Account:
+              {{walletDetail?.accountNumber}} ({{walletDetail?.bankName}})</p>
+          </div>
+        </ng-template> -->
+
+        <div class="dropdown d-inline-block" ngbDropdown *ngIf="isLoggedIn">
+          <button type="button" class="btn header-item" id="page-header-user-dropdown" ngbDropdownToggle>
+            <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-1.jpg" alt="Header Avatar">
+            <span class="d-none d-xl-inline-block ms-1">{{walletDetail?.accountName}}</span>
+            <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+          </button>
+          <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+            <!-- <a class="dropdown-item" href="javascript: void(0);"><i
+                class="bx bx-wallet font-size-16 align-middle me-1"></i> {{balance
+              |
+              currency : '': 'NGN'}}</a> -->
+            <a class="dropdown-item" href="javascript: void(0);"><i
+                class="bx bx-user font-size-16 align-middle me-1"></i>
+              {{ 'HEADER.LOGIN.PROFILE' | translate}}</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-danger" href="javascript: void(0);" (click)="logout()"><i
+                class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i>
+              {{ 'HEADER.LOGIN.LOGOUT' | translate}}</a>
+          </div>
+        </div>
+
+      </ng-container>
+
+    </div>
+
+  </div>
+</header>
+
+<div class="topnav" *ngIf="isLoggedIn">
+  <div class="container-fluid">
+    <nav class="navbar navbar-light navbar-expand-lg topnav-menu active">
+      <div class="collapse navbar-collapse active" id="topnav-menu-content">
+        <ul class="navbar-nav">
+
+          <li class="nav-item dropdown">
+            <a [routerLink]="['/home']" routerLinkActive="router-link-active"
+              class="nav-link dropdown-toggle arrow-none" id="topnav-components" role="button">
+              <i class="bx  me-2"></i>Home
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a [routerLink]="['/transaction/view']" routerLinkActive="router-link-active"
+              class="nav-link dropdown-toggle arrow-none" id="topnav-components" role="button">
+              <i class="bx  me-2"></i>Transaction
+            </a>
+          </li>
+          <!-- <ng-container *ngFor="let item of menuItems">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle arrow-none" *ngIf="!item.subItems" href="javascript: void(0);"
+                id="topnav-components" [routerLink]="item.link" role="button">
+                <i class="bx {{item.icon}} me-2"></i>{{ item.label | translate }} <div class="arrow-down"
+                  *ngIf="hasItems(item)"></div>
+              </a>
+
+              <a *ngIf="item.subItems" class="nav-link dropdown-toggle arrow-none" (click)="onMenuClick($event)"
+                href="javascript: void(0);" id="topnav-components" role="button">
+                <i class="bx {{item.icon}} me-1"></i>
+                {{item.label| translate }}
+                <div class="arrow-down"></div>
+              </a>
+
+              <div class="dropdown-menu" [ngClass]="{'dropdown-mega-menu-xl px-2':  item.subItems.length > 11}" aria-labelledby="topnav-dashboard" *ngIf="hasItems(item)">
+                <ng-template ngFor let-i="index" let-subitem [ngForOf]="item.subItems">
+                  <a *ngIf="item.subItems.length < 11 && !hasItems(subitem)" class="col dropdown-item side-nav-link-ref"
+                  [routerLink]="subitem.link"
+                  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                   {{subitem.label | translate }}
+              </a>
+              <div *ngIf="item.subItems.length > 11">
+                  <div *ngIf="i % 3 == 0" class="row">
+                      <div class="col-lg-4"><a class="dropdown-item side-nav-link-ref" routerLinkActive="active" [routerLink]="subitem.link">{{item.subItems[i].label | translate}}</a></div>
+                      <div class="col-lg-4"><a class="dropdown-item side-nav-link-ref" routerLinkActive="active" [routerLink]="item.subItems[i + 1]?.link">{{item.subItems[i + 1]?.label | translate}}</a></div>
+                      <div class="col-lg-4"><a class="dropdown-item side-nav-link-ref" routerLinkActive="active" [routerLink]="item.subItems[i + 2]?.link">{{item.subItems[i + 2]?.label | translate}}</a></div>
+                  </div>
+              </div>
+              
+                <div class="dropdown" *ngIf="hasItems(subitem)">
+                  <a class="dropdown-item dropdown-toggle" href="javascript: void(0);"
+                    (click)="onMenuClick($event)">{{ subitem.label | translate }}
+                    <div class="arrow-down"></div>
+                  </a>
+                  <div class="dropdown-menu">
+                    <ng-template ngFor let-subSubitem [ngForOf]="subitem.subItems">
+                      <a class="dropdown-item side-nav-link-ref" *ngIf="!hasItems(subSubitem)"
+                        href="javascript: void(0);" [routerLink]="subSubitem.link"
+                        routerLinkActive="active">{{ subSubitem.label | translate }}</a>
+                      <div class="dropdown" *ngIf="hasItems(subSubitem)">
+
+                        <a class="dropdown-item dropdown-toggle" href="javascript: void(0);"
+                          (click)="onMenuClick($event)">{{ subSubitem.label | translate }}
+                          <div class="arrow-down"></div>
+                        </a>
+                        <div class="dropdown-menu">
+                          <ng-template ngFor let-subSubSubitem [ngForOf]="subSubitem.subItems">
+                            <a class="dropdown-item side-nav-link-ref" href="javascript: void(0);"
+                              [routerLink]="subSubSubitem.link"
+                              routerLinkActive="active">{{ subSubSubitem.label | translate }}</a>
+                          </ng-template>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
+              </ng-template>
+             </div>
+            </li>
+          </ng-container> -->
+        </ul>
+      </div>
+    </nav>
+  </div>
+</div>

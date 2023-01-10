@@ -1,0 +1,9 @@
+
+Dewpay {
+
+#15707A...Green
+#F7F9F9....White
+#FAA52E...Golden yellow
+#EF533A....orange red
+
+}

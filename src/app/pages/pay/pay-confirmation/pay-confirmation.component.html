@@ -1,0 +1,74 @@
+<app-pre-loader [isLoading]="isLoading"></app-pre-loader>
+<div class="container-fluid" *ngIf="transaction">
+    <div class="card">
+        <div class="card-body">
+
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <h4>Transaction Detail</h4>
+                    <h6 *ngIf="paramsObject">
+                        Kindly make transfer to the account detail below
+                    </h6>
+                    <table class="table">
+                        <tbody>
+                            <tr *ngIf="paramsObject?.accountName">
+                                <th scope="row">Account Name</th>
+                                <td>{{paramsObject?.accountName}}</td>
+                            </tr>
+                            <tr *ngIf="paramsObject?.accountNumber">
+                                <th scope="row">Account Number</th>
+                                <td>{{paramsObject?.accountNumber}}</td>
+                            </tr>
+                            <tr *ngIf="paramsObject?.bankName">
+                                <th scope="row">Bank Name</th>
+                                <td>{{paramsObject?.bankName}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Phone Number</th>
+                                <td>{{transaction?.customerPhone}}</td>
+                            </tr>
+                            <tr *ngIf="transaction?.customerEmail">
+                                <th scope="row">Email</th>
+                                <td>{{transaction?.customerEmail}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Amount</th>
+                                <td><span style="text-decoration: line-through;">
+                                    {{transaction?.initialAmount | currency :'' : 'NGN'}}</span>
+                                    &nbsp;&nbsp;{{transaction?.finalAmount | currency :'' : 'NGN'}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Payment Method</th>
+                                <td>{{transaction.paymentMethod}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Status</th>
+                                <td>{{transaction.billPaymentStatus}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="text-center mt-4">
+                        <a [routerLink]="['/home']" routerLinkActive="router-link-active"
+                            class="btn btn-secondary btn-sm">
+                            Back Home <i class="mdi mdi-home ms-1"></i>
+                        </a>
+                        &nbsp;
+                        <button *ngIf="transaction.billPaymentStatus === 'NEW' && transaction.paymentMethod !== 'BANK_TRANSFER'" (click)="getTransaction(transactionId)"
+                            class="btn btn-primary btn-sm">Get Transaction
+                            Status <i class="mdi mdi-arrow-right ms-1"></i>
+                        </button>
+
+                        <button *ngIf="transaction.paymentMethod === 'BANK_TRANSFER' && transaction.billPaymentStatus === 'NEW'" (click)="getTransaction(transactionId)"
+                            class="btn btn-primary btn-sm">I have Made Payment
+                            Status <i class="mdi mdi-arrow-right ms-1"></i>
+                        </button>
+                        <a  [routerLink]="['/transaction/view']" routerLinkActive="router-link-active" *ngIf="transaction.billPaymentStatus !== 'NEW'" (click)="getTransaction(transactionId)"
+                            class="btn btn-primary btn-sm">View Transactions<i class="mdi mdi-arrow-right ms-1"></i>
+                    </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

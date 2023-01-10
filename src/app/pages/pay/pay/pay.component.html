@@ -1,0 +1,306 @@
+<app-pre-loader [isLoading]="isLoading"></app-pre-loader>
+<div class="container-fluid" *ngIf="!isLoading">
+    <div class="card">
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-md-6" *ngIf="showForm; else summaryPage">
+                    <form *ngIf="dataProps && dataProps?.length > 0" [formGroup]="form" (ngSubmit)="onContinue()">
+                        <div class="form-group">
+                            <div class="mb-3" *ngFor="let formField of dataProps">
+
+                                <ng-container [ngSwitch]="formField.type">
+                                    <ng-container *ngSwitchCase="'text'">
+                                        <ng-container [ngSwitch]="formField?.fieldName">
+                                            <ng-container *ngSwitchCase="'phone'">
+                                                <div class="mb-3">
+                                                    <label> {{ formField?.label }}</label>
+                                                    <input class="form-control" type="text" digitOnly maxlength="15"
+                                                        placeholder="Enter phone number" formControlName="phone"
+                                                        [ngClass]="{ 'is-invalid': form.get('phone').errors }" />
+                                                    <div *ngIf="form.get('phone').errors" class="invalid-feedback">
+                                                        <div *ngIf="form.get('phone').errors?.required">
+                                                            Phone number is required
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+
+                                            <ng-container *ngSwitchCase="'amount'">
+                                                <div class="mb-3">
+                                                    <label> {{ formField?.label }}</label>
+                                                    <input class="form-control" type="text" digitOnly
+                                                        placeholder="Enter {{ formField?.label }}"
+                                                        formControlName="{{ formField?.fieldName }}"
+                                                        [ngClass]="{ 'is-invalid': form.get(formField?.fieldName).errors }" />
+                                                    <div *ngIf="form.get(formField?.fieldName).errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="form.get(formField?.fieldName).errors.required">
+                                                            Amount is required
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+
+                                            <ng-container *ngSwitchCase="'smartcardNumber'">
+                                                <div class="mb-3">
+                                                    <label> {{ formField?.label }}</label>
+                                                    <input class="form-control" type="text" digitOnly
+                                                        placeholder="Enter {{ formField?.label }}"
+                                                        formControlName="{{ formField?.fieldName }}"
+                                                        (change)="doLookUp($event.target.value, formField?.fieldName)"
+                                                        [ngClass]="{ 'is-invalid': form.get(formField?.fieldName).errors }" />
+                                                    <div *ngIf="form.get(formField?.fieldName).errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="form.get(formField?.fieldName).errors.required">
+                                                            Smart Card Number is required
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+
+                                            <ng-container *ngSwitchCase="'meterNumber'">
+                                                <div class="mb-3">
+                                                    <label> {{ formField?.label }}</label>
+                                                    <input class="form-control" type="text" digitOnly
+                                                        placeholder="Enter {{ formField?.label }}"
+                                                        formControlName="{{ formField?.fieldName }}"
+                                                        (change)="doLookUp($event.target.value, formField?.fieldName)"
+                                                        [ngClass]="{ 'is-invalid': form.get(formField?.fieldName).errors }" />
+                                                    <div *ngIf="form.get(formField?.fieldName).errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="form.get(formField?.fieldName).errors.required">
+                                                            Meter Number is required
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+
+
+                                            <ng-container *ngSwitchDefault>
+                                                <div class="mb-3">
+                                                    <label> {{ formField?.label }}</label>
+                                                    <input class="form-control" type="{{formField?.type}}"
+                                                        placeholder="Enter {{ formField?.label }}"
+                                                        formControlName="{{ formField?.fieldName }}"
+                                                        [ngClass]="{ 'is-invalid': form.get(formField?.fieldName).errors }" />
+                                                    <div *ngIf="form.get(formField?.fieldName).errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="form.get(formField?.fieldName).errors?.required">
+                                                            {{ formField?.label }} is required
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+                                    </ng-container>
+                                    <ng-container *ngSwitchCase="'select'">
+
+
+                                        <ng-container [ngSwitch]="formField?.fieldName">
+                                            <ng-container *ngSwitchCase="'dataCode'">
+                                                <div class="mb-3">
+                                                    <label> {{ formField.label }}</label>
+                                                    <select class="form-control"
+                                                        (change)="onChangeDataCode($event.target.value)"
+                                                        formControlName="{{ formField?.fieldName }}"
+                                                        [ngClass]="{ 'is-invalid': form.get(formField?.fieldName).errors }">
+                                                        <option value="" disabled>Select {{ formField?.fieldName }}
+                                                        </option>
+                                                        <option *ngFor="let option of formField?.option"
+                                                            [value]="option?.name">
+                                                            {{option?.name}}</option>
+                                                    </select>
+                                                    <div *ngIf="form.get(formField?.fieldName).errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="form.get(formField?.fieldName).errors?.required">
+                                                            {{ formField?.label }} is required
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+
+                                            <ng-container *ngSwitchCase="'productCode'">
+                                                <div class="mb-3">
+                                                    <label> {{ formField.label }}</label>
+                                                    <select class="form-control"
+                                                        (change)="onChangeDataCode($event.target.value)"
+                                                        formControlName="{{ formField?.fieldName }}"
+                                                        [ngClass]="{ 'is-invalid': form.get(formField?.fieldName).errors }">
+                                                        <option value="" disabled>Select {{ formField?.fieldName }}
+                                                        </option>
+                                                        <option *ngFor="let option of formField?.option"
+                                                            [value]="option?.name">
+                                                            {{option?.name}}</option>
+                                                    </select>
+                                                    <div *ngIf="form.get(formField?.fieldName).errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="form.get(formField?.fieldName).errors?.required">
+                                                            {{ formField?.label }} is required
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+
+                                            <ng-container *ngSwitchDefault>
+                                                <div class="mb-3">
+                                                    <label> {{ formField.label }}</label>
+                                                    <select class="form-control"
+                                                        formControlName="{{ formField?.fieldName }}"
+                                                        [ngClass]="{ 'is-invalid': form.get(formField?.fieldName).errors }">
+                                                        <option value="" disabled>Select {{ formField?.fieldName }}
+                                                        </option>
+                                                        <option *ngFor="let option of formField?.option"
+                                                            [value]="option.value">
+                                                            {{option?.name}}</option>
+                                                    </select>
+                                                    <div *ngIf="form.get(formField?.fieldName).errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="form.get(formField?.fieldName).errors?.required">
+                                                            {{ formField?.label }} is required
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+                                    </ng-container>
+                                </ng-container>
+                            </div>
+
+
+
+                            <div class="mb-3" *ngIf="customerNameField">
+                                <label>Customer Name</label>
+                                <input class="form-control" type="text" required formControlName="customerName"
+                                    readonly />
+                            </div>
+
+                            <div class="mb-3" *ngIf="amountField">
+                                <label>Amount</label>
+                                <input class="form-control" type="text" required formControlName="amount" readonly />
+                            </div>
+
+                            <!-- 
+
+                            <div class="mb-3">
+                                <label>Beneficiary Phone Number</label>
+                                <input class="form-control" type="text" required formControlName="beneficiaryPhone"
+                                digitOnly
+                                    placeholder="Enter beneficiary phone number"
+                                    [ngClass]="{ 'is-invalid': form.get('beneficiaryPhone').errors }" />
+                                <div *ngIf="form.get('beneficiaryPhone').errors" class="invalid-feedback">
+                                    <div *ngIf="form.get('beneficiaryPhone').errors?.required">
+                                        Beneficiary Phone Number is required
+                                    </div>
+                                </div>
+                            </div> -->
+
+
+                            <!-- <div class="mb-3">
+                                <label>Beneficiary Email</label>
+                                <input class="form-control" type="email" required formControlName="beneficiaryEmail"
+                                    placeholder="Enter beneficiary email"
+                                    [ngClass]="{ 'is-invalid': form.get('beneficiaryEmail').errors }" />
+                                <div *ngIf="form.get('beneficiaryEmail').errors" class="invalid-feedback">
+                                    <div *ngIf="form.get('beneficiaryEmail').errors?.required">
+                                        Beneficiary Email is required
+                                    </div>
+                                </div>
+                            </div> -->
+
+                            <div class="mb-3">
+                                <label>Payment Method</label>
+                                <select class="form-control" (change)="onChange($event.target.value)" required
+                                    formControlName="paymentMethod"
+                                    [ngClass]="{ 'is-invalid': form.get('paymentMethod').errors }">
+                                    <option [value]="" disabled>Select payment method</option>
+                                    <option *ngFor="let option of paymentMethods" [value]="option.value">
+                                        {{option.name}}</option>
+                                </select>
+                                <div *ngIf="form.get('paymentMethod').errors" class="invalid-feedback">
+                                    <div *ngIf="form.get('paymentMethod').errors.required">
+                                        Payment Method Email is required
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3" *ngIf="showPinField">
+                                <label>PIN</label>
+                                <input class="form-control" type="password" digitOnly minlength="4" maxlength="4"
+                                    pattern="[0-9]*" inputmode="numeric" required formControlName="pin"
+                                    placeholder="Enter transaction pin"
+                                    [ngClass]="{ 'is-invalid': form.get('pin')?.errors }" />
+                                <div *ngIf="form.get('pin')?.errors" class="invalid-feedback">
+                                    <div *ngIf="form.get('pin')?.errors?.required">
+                                        PIN Email is required
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Continue</button>
+                            <!-- [disabled]="this.form.invalid" -->
+                        </div>
+                    </form>
+                </div>
+                <ng-template #summaryPage>
+                    <div class="col-md-6">
+                        <h4>Transaction Confirmation</h4>
+                        <table class="table">
+                            <tbody>
+                                <tr *ngIf="categoryCode === 'airtime'">
+                                    <th scope="row">Plan</th>
+                                    <td>{{formClone?.plan}}</td>
+                                </tr>
+
+                                <tr *ngIf="categoryCode === 'databundle'">
+                                    <th scope="row">Data Bundle</th>
+                                    <td>{{selectedBundle?.name}}</td>
+                                </tr>
+                                <tr *ngIf="categoryCode === 'cabletv'">
+                                    <th scope="row">Smart Card Number</th>
+                                    <td>{{billerEnquiryResponse?.customerId}}</td>
+                                </tr>
+                                <tr *ngIf="categoryCode === 'cabletv'">
+                                    <th scope="row">Account Name</th>
+                                    <td>{{billerEnquiryResponse?.customerName}}</td>
+                                </tr>
+                                <tr *ngIf="formClone?.phone">
+                                    <th scope="row">Phone Number</th>
+                                    <td>{{formClone?.phone}}</td>
+                                </tr>
+                                <tr *ngIf="formClone?.beneficiaryPhone">
+                                    <th scope="row">Beneficiary Phone Number</th>
+                                    <td>{{formClone?.phone}}</td>
+                                </tr>
+                                <tr *ngIf="formClone?.email">
+                                    <th scope="row">Email</th>
+                                    <td>{{formClone?.email}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Amount</th>
+                                    <td><span style="text-decoration: line-through;">
+                                    {{charges?.initialAmount | currency :'' : 'NGN'}}</span>&nbsp;&nbsp;{{charges?.finalAmount | currency :'' : 'NGN'}}</td>
+                                </tr>
+                                <tr *ngIf="discount">
+                                    <th scope="row">Discount</th>
+                                    <td>{{discount | currency :'' : 'NGN'}}</td>
+                                </tr>
+                                <!-- <tr>
+                                    <th scope="row">Fee</th>
+                                    <td>{{charges?.feeAmount}}</td>
+                                </tr> -->
+                                <tr>
+                                    <th scope="row">Payment Method</th>
+                                    <td>{{paymentMethod}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button (click)="back()" type="button" class="btn btn-primary">Back</button>
+                        &nbsp;
+                        &nbsp;
+                        <button (click)="onSubmit()" type="button" class="btn btn-primary">Submit</button>
+                    </div>
+                </ng-template>
+            </div>
+
+        </div>
+    </div>
+</div>

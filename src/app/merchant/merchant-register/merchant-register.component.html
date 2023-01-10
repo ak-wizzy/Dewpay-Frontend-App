@@ -1,0 +1,194 @@
+<app-pre-loader [isLoading]="isLoading"></app-pre-loader>
+<div class="container-fluid p-0">
+    <div class="row g-0">
+
+        <div class="col-xl-8">
+            <div class="auth-full-bg pt-lg-5 p-4">
+                <div class="w-100">
+                    <div class="bg-overlay"></div>
+                    <div class="d-flex h-100 flex-column">
+
+                        <div class="p-4 mt-auto">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-7">
+                                    <div class="text-center">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4">
+            <div class="auth-full-page-content p-md-5 p-4">
+                <div class="w-100">
+
+                    <div class="d-flex flex-column h-100">
+                        <div class="mb-2 mb-md-2">
+                            <a style="font-size: 20px; font-weight: 800;" routerLink="/" class="d-block auth-logo">
+                                <img src="assets/images/dewpay-icon.png" alt="" height="60" width="220" class="auth-logo-dark">
+                                <img src="assets/images/dewpay-icon.png" alt="" height="60" width="220" class="auth-logo-light">
+                            </a>
+                        </div>
+                        <div class="my-auto">
+                            <div>
+                                <h5 class="text-primary">Register account</h5>
+                                <p class="text-muted">Get your free Dew Pay account now.</p>
+                            </div>
+                            <div class="mt-2">
+                                <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+                                    <ngb-alert type="success" *ngIf="successmsg" [dismissible]="false">Registeration
+                                        successfull.
+                                    </ngb-alert>
+
+                                    <ngb-alert type="danger" *ngIf="error" [dismissible]="false">{{ error }}</ngb-alert>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="firstName">First Name</label>
+                                                <input type="text" formControlName="firstName" class="form-control"
+                                                    id="firstName"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"
+                                                    placeholder="Enter first name">
+                                                <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.firstName.errors.required">First Name is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="lastName">Last Name</label>
+                                                <input type="text" formControlName="lastName" class="form-control"
+                                                    id="lastName"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"
+                                                    placeholder="Enter last name">
+                                                <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.lastName.errors.required">Last name is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="useremail">Email</label>
+                                        <input type="email" formControlName="email"
+                                            [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+                                            class="form-control" id="useremail" placeholder="Enter email">
+                                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                            <div *ngIf="f.email.errors.required">Email is required</div>
+                                            <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="gender">Gender</label>
+                                                <select formControlName="gender"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.gender.errors }"
+                                                    class="form-control" id="gender" placeholder="Enter gender">
+                                                    <option value=null selected>Select Gender</option>
+                                                    <option value="1">Male</option>
+                                                    <option value="2">Female</option>
+                                                </select>
+                                                <div *ngIf="submitted && f.gender.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.gender.errors.required">Gender is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+
+                                            <div class="mb-3">
+                                                <label for="dob">Date of Birth</label>
+                                                <input type="date" formControlName="dob"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.dob.errors }"
+                                                    class="form-control" id="dob" placeholder="Enter date of birth">
+                                                <div *ngIf="submitted && f.dob.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.dob.errors.required">Date of birth is required
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="bvn">BVN</label>
+                                                <input type="number" formControlName="bvn" class="form-control"
+                                                    id="bvn"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.bvn.errors }"
+                                                    placeholder="Enter BVN">
+                                                <div *ngIf="submitted && f.bvn.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.bvn.errors.required">BNN is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="phoneNumber">Phone Number</label>
+                                                <input type="text" formControlName="phoneNumber" class="form-control"
+                                                    id="phoneNumber"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors }"
+                                                    placeholder="Enter phoneNumber">
+                                                <div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.phoneNumber.errors.required">Phone number is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="userpassword">Password</label>
+                                                <input type="password" formControlName="password"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+                                                    class="form-control" id="userpassword" placeholder="Enter password">
+                                                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.password.errors.required">Password is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="transactionPin">Transaction PIN</label>
+                                                <input type="password" formControlName="transactionPin"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.transactionPin.errors }"
+                                                    class="form-control" id="transactionPin" placeholder="Enter transaction PIN">
+                                                <div *ngIf="submitted && f.transactionPin.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.transactionPin.errors.required">Transaction PIN is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-0">By registering you agree to the Dew Pay <a
+                                                href="javascript: void(0);" class="text-primary">Terms of Use</a>
+                                        </p>
+                                    </div>
+                                    <div class="mt-4 d-grid">
+                                        <button class="btn btn-primary btn-block" type="submit">Register</button>
+                                    </div>
+                                </form>
+
+                                <div class="mt-3 text-center">
+                                    <p>Already have a Merchant Account ? <a routerLink="/merchant/login"
+                                            class="fw-medium text-primary"> Login</a> </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end col -->
+    </div>
+    <!-- end row -->
+</div>
+<!-- end container-fluid -->

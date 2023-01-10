@@ -1,0 +1,54 @@
+<app-pre-loader [isLoading]="isLoading"></app-pre-loader>
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-body">
+      <h4>Transaction History</h4>
+      <form  [formGroup]="searchForm" (ngSubmit)="onSearch()">
+      <div class="row">
+   
+        <div class="col-md-3">
+          <div class="mb-3">
+            <label for="firstName">Start Date</label>
+          <input type="date"  formControlName="startDate"  placeholder="Start Date" 
+          [ngClass]="{ 'is-invalid':submitted && f.startDate.errors }"
+          class="form-control">
+          <div *ngIf="f.startDate.errors" class="invalid-feedback">
+            <div *ngIf="f.startDate.errors.required">Start Date is required</div>
+        </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="mb-3">
+            <label for="firstName">End Date</label>
+          <input type="date"  formControlName="endDate" placeholder="End Date"
+          [ngClass]="{ 'is-invalid':submitted && f.endDate.errors }"
+           class="form-control">
+          <div *ngIf="f.endDate.errors" class="invalid-feedback">
+            <div *ngIf="f.endDate.errors.required">End Date is required</div>
+        </div>
+          </div>
+        </div>
+        <div class="col-md-2 mt-4">
+          <button _ngcontent-xug-c308="" type="submit" class="btn btn-primary w-md">Search</button>
+        </div>
+      </div>
+    </form>
+
+      <div class="table-scroll table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <!-- <th>#</th> -->
+              <th *ngFor="let header of getHeaders()">{{header}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of transactions">
+              <td *ngFor="let key of getHeaders()">{{item.otherInfo[key]}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

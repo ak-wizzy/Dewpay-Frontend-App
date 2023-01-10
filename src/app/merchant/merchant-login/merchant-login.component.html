@@ -1,0 +1,112 @@
+<app-pre-loader [isLoading]="isLoading"></app-pre-loader>
+<div class="container-fluid p-0">
+    <div class="row g-0">
+
+        <div class="col-xl-8">
+            <div class="auth-full-bg pt-lg-5 p-4">
+                <div class="w-100">
+                    <div class="bg-overlay"></div>
+                    <div class="d-flex h-100 flex-column">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end col -->
+
+        <div class="col-xl-4">
+            <div class="auth-full-page-content p-md-5 p-4">
+                <div class="w-100">
+
+                    <div class="d-flex flex-column h-100">
+                      
+                        <div class="my-auto">
+                            <div class="mb-2 mb-md-5">
+                                <a style="font-size: 20px; font-weight: 800;" srouterLink="/" class="d-block auth-logo">
+                                    <img src="assets/images/dewpay-icon.png" alt="" height="60" width="220" class="auth-logo-dark">
+                                    <img src="assets/images/dewpay-icon.png" alt="" height="60" width="220" class="auth-logo-light">
+                                </a>
+                            </div>
+                            <div>
+                                <h5 class="text-primary">Welcome Back !</h5>
+                                <p class="text-muted">Sign in to continue to Dew Pay.</p>
+                            </div>
+
+                            <div class="mt-4">
+                                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+                                    <div class="mb-3">
+                                        <label for="username">Username</label>
+                                        <input type="email" class="form-control" id="email" formControlName="username"
+                                            [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+                                            placeholder="Enter username">
+                                        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                                            <div *ngIf="f.username.errors.required">Username is required</div>
+                                            <div *ngIf="f.username.errors.email">Username must be a valid email address
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <!-- <div class="float-end">
+                                            <a routerLink="/account/recoverpwd-2" class="text-muted">Forgot
+                                                password?</a>
+                                        </div> -->
+                                        <label for="userpassword">Password</label>
+                                        <div class="input-group auth-pass-inputgroup">
+                                            <input type="password" class="form-control" formControlName="password"
+                                                [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+                                                placeholder="Enter password" aria-label="Password"
+                                                aria-describedby="password-addon">
+                                            <button class="btn btn-light " type="button" id="password-addon"><i
+                                                    class="mdi mdi-eye-outline"></i></button>
+                                            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                                <span *ngIf="f.password.errors.required">Password is required</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="remember-check">
+                                        <label class="form-check-label" for="remember-check">
+                                            Remember me
+                                        </label>
+                                    </div>
+
+                                    <div class="mt-3 d-grid">
+                                        <button class="btn btn-primary btn-block" type="submit">Log In</button>
+                                    </div>
+
+                                    <!-- <div class="mt-2 text-center">
+                                        <p>Forgot Password? <a routerLink="#"
+                                                class="fw-medium text-primary"> Reset </a> </p>
+                                    </div> -->
+
+                                </form>
+
+                                <div class="mt-4 text-center">
+                                    <p> User Login <a routerLink="/account/login"
+                                            class="fw-medium text-primary">Click Here</a> </p>
+                                </div>
+
+
+                                <div class="mt-3 text-center">
+                                    <p>Don't have a merchant account ? <a routerLink="/merchant/signup"
+                                            class="fw-medium text-primary"> Sign Up Now </a> </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 mt-md-5 text-center">
+                            <p class="mb-0">©
+                                {{year}} Dew Pay.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end col -->
+    </div>
+    <!-- end row -->
+</div>
+<!-- end container-fluid -->

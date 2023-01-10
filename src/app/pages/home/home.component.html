@@ -1,0 +1,58 @@
+<app-pre-loader [isLoading]="isLoading"></app-pre-loader>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mb-2">
+                        <div class="row">
+                            <div *ngFor="let billerCategory of billerCategories" class="col-md-3">
+                                <div class="card mini-stats-wid color-box bg-primary"
+                                    (click)="getBillerCategoryCode(billerCategory?.code)">
+                                    <div class="card-body">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p class="text-muted fw-medium" style="color: white !important;">
+                                                    {{billerCategory?.name}}</p>
+                                                <h4 class="mb-0"></h4>
+                                            </div>
+
+                                            <div
+                                                class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center">
+                                                <span class="avatar-title">
+                                                    <i class="bx bx-check-circle font-size-24"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end card-body -->
+                                </div>
+                                <!-- end card -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2">
+                <div class="row">
+                    <div class="col-md-3" *ngFor="let biller of billerList?.productList">
+                        <div class="card" (click)="gotoPay(biller, billerList)">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-md-3">
+                                    <img style="height: 50px; width: 50px;" class="card-img img-fluid"
+                                        [src]="biller.logo" alt="Card image">
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{biller?.name}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
